@@ -5,6 +5,7 @@ mod fontinfo;
 mod glyph;
 mod utils;
 
+use std::path::Path;
 use buildbasic::{build_font, build_fonts};
 use clap::{App, Arg};
 use designspace::Designspace;
@@ -60,7 +61,7 @@ fn main() {
             .sources
             .source
             .par_iter()
-            .map(|s| s.ufo().expect("Couldn't open master file"))
+            .map(|s| s.ufo(Path::new(filename)).expect("Couldn't open master file"))
             .collect();
         if masters.len() > 1 {
             font = build_fonts(dm_index.unwrap(), masters, ds.variation_model(), subset);
