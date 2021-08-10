@@ -375,24 +375,7 @@ pub fn fill_tables(
     let mut font = Font::new(font::SfntVersion::TrueType);
     let head_table = compile_head(input, &glyf_table);
     let post_table = compile_post(input, &names);
-    let (
-        num_glyphs,
-        max_points,
-        max_contours,
-        max_composite_points,
-        max_composite_contours,
-        max_component_elements,
-        max_component_depth,
-    ) = glyf_table.maxp_statistics();
-    let maxp_table = maxp::new10(
-        num_glyphs,
-        max_points,
-        max_contours,
-        max_composite_points,
-        max_composite_contours,
-        max_component_elements,
-        max_component_depth,
-    );
+    let maxp_table = glyf_table.as_maxp10();
     let os2_table = compile_os2(input, &metrics, &glyf_table, &mapping);
     let cmap_table = compile_cmap(mapping);
     let name_table = compile_name(input);
