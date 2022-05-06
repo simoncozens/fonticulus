@@ -191,6 +191,11 @@ pub fn compile_cmap(
             uvs_mapping: Some(uvs_mapping),
         })
     }
+
+    // The specification demands the following sorting, see
+    // https://docs.microsoft.com/en-us/typography/opentype/spec/cmap#encoding-records-and-encodings.
+    subtables.sort_by_key(|s| (s.platformID, s.encodingID, s.languageID));
+
     cmap::cmap { subtables }
 }
 
